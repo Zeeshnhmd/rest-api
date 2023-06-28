@@ -1,6 +1,8 @@
 import Joi from 'joi';
+import bcrypt from 'bcrypt';
 
-import CustomErrorHandler from '../../services/CustomErrorHandler';
+import { User } from '../../models';
+import { CustomerErrorHandler, JwtService } from '../../services';
 
 const registerController = {
 	//* Always remember to use this format (req, res, next)
@@ -37,14 +39,40 @@ const registerController = {
 			const exist = await User.exists({ email: req.body.email });
 			if (exist) {
 				return next(
-					CustomErrorHandler.alreadyExist('This email is already taken')
+					CustomerErrorHandler.alreadyExist('This email is already taken')
 				);
 			}
 		} catch (err) {
 			return next(err);
 		}
 
-		res.json({ msg: 'Hello from express' });
+		const { name, email, password } = req.body;
+
+		//* hash password
+		const hashedPassword = await bcrypt.hash(password, 10);
+
+		//* prepare the model
+
+		const user = new User({
+			name,
+			email,
+			password: hashedPassword,
+		});
+
+		let access_token;
+		try {
+			const result = await user.save();
+			console.log(result);
+			//* Token
+			access_token = JwtService.sign({
+				_id: result._id,
+				role: result.role,
+			});
+		} catch (err) {
+			return next(err);
+		}
+
+		res.json({ access_token: access_token });
 	},
 };
 
