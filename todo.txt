@@ -1,4 +1,4 @@
-- Register a user
+- Register a user [Done]
 - Login a user
 - Who am I
 - Add new product

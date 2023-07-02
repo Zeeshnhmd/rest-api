@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
@@ -19,10 +19,10 @@ const userSchema = new Schema(
 		},
 		role: {
 			type: String,
-			default: 'customer',
+			default: "customer",
 		},
 	},
 	{ timestamps: true }
 );
 
-export default mongoose.model('User', userSchema, 'users');
+export default mongoose.model("User", userSchema, "users");
