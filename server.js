@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 import { APP_PORT, DB_URL } from './config';
 import routes from './routes';
-import errorHandler from './middlewares/errorHandler';
+import { errorHandler } from './middlewares';
 
 const app = express();
 
