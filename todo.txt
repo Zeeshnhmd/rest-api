@@ -1,6 +1,6 @@
 - Register a user [Done]
-- Login a user
-- Who am I
+- Login a user [Done]
+- Who am I [Done]
 - Add new product
 - Update a product
 - Get all products
